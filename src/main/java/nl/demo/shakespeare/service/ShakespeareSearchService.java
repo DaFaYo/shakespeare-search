@@ -10,5 +10,7 @@ public interface ShakespeareSearchService {
 
     List<SearchResult> search(String keyword) throws IOException;
 
+    List<SearchResult> fuzzySearch(String keyword) throws IOException;
+
     Map<String, Long> countKeywordOccurrences(String keyword);
 }

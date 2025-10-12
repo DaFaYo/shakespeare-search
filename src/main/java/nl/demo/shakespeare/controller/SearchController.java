@@ -42,6 +42,22 @@ public class SearchController {
         return "results";
     }
 
+
+    @GetMapping("/fuzzy-search")
+    public String fuzzySearch(@RequestParam String q, Model model) {
+        List<SearchResult> results;
+        try {
+            results = searchService.fuzzySearch(q);
+        } catch (Exception e) {
+            log.error("Error in search controller for query '{}'", q, e);
+            results = Collections.emptyList();
+            model.addAttribute("errorMessage", "Search failed: " + e.getMessage());
+        }
+        model.addAttribute("query", q);
+        model.addAttribute("results", results);
+        return "results";
+    }
+
     @GetMapping("/api/keyword-count")
     @ResponseBody
     public Map<String, Long> countKeyword(@RequestParam("q") String keyword) {
