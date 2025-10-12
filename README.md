@@ -32,6 +32,15 @@ data/shakespeare/
 
 ## Running the app
 
+Start docker:
+
+```bash
+docker-compose up -d
+
+```
+
+Run the application:
+
 ```bash
 
 mvn spring-boot:run
@@ -39,4 +48,3 @@ mvn spring-boot:run
 
 * Frontend (Thymeleaf): http://localhost:8080/
 * API for keyword count: GET http://localhost:8080/api/keyword-count?q=hamlet
-* 
