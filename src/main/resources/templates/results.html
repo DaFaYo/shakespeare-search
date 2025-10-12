@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resultaten</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="container">
+    <form action="/search" method="get">
+        <input type="text" name="q" placeholder="Enter keyword..." />
+        <button type="submit">Search</button>
+    </form>
+
+    <h1 th:text="'Resultaten voor: ' + ${query}"></h1>
+
+    <div th:if="${#lists.isEmpty(results)}">
+        <p>Geen resultaten gevonden.</p>
+    </div>
+
+    <div th:each="r : ${results}" class="result">
+        <h2 th:text="${r.title}">Stuk</h2>
+        <p><strong>Aantal voorkomens:</strong> <span th:text="${r.occurrences}"></span></p>
+        <p th:utext="${r.highlightedText}"></p>
+        <hr/>
+    </div>
+
+    <a th:href="@{/}">Nieuwe zoekopdracht</a>
+</div>
+</body>
+</html>

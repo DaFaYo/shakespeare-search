@@ -1,0 +1,64 @@
+/* Globale body styling */
+body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* horizontaal centreren */
+    align-items: flex-start; /* start bovenaan */
+    min-height: 100vh;
+    background-color: #f8f8f8;
+}
+
+/* Container voor content */
+.container {
+    width: 90%;
+    max-width: 800px;
+    background: #fff;
+    margin-top: 2em;
+    padding: 2em;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Formulier styling */
+form {
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 1em;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 1em 0;
+    z-index: 10;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 0.5em;
+    font-size: 1rem;
+}
+
+button {
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Highlight voor zoekwoorden */
+mark {
+    background-color: yellow;
+}
+
+/* Resultaten styling */
+.result {
+    margin-bottom: 2em;
+}
