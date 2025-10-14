@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div th:fragment="results">
+    <div th:if="${#lists.isEmpty(results)}">
+        <p>No results found for "<strong th:text="${query}"></strong>".</p>
+    </div>
+
+    <div th:each="r : ${results}" class="result">
+        <h2 th:text="${r.title}"></h2>
+        <p><strong>Occurrences:</strong> <span th:text="${r.occurrences}"></span></p>
+        <p th:utext="${r.highlightedText}"></p>
+        <hr/>
+    </div>
+</div>
+</body>
+</html>

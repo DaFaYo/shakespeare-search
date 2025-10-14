@@ -1,16 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Shakespeare Search</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div class="container">
-    <h1>Search Shakespeare</h1>
-    <form action="/search" method="get">
-        <input type="text" name="q" placeholder="Enter keyword..." />
+    <h1>Shakespeare Search</h1>
+
+    <form id="search-form" class="search-form">
+        <input type="text" id="query" name="q" placeholder="Enter keyword..." required />
+        <label>
+            <input type="checkbox" id="fuzzy" name="fuzzy"> Fuzzy search
+        </label>
         <button type="submit">Search</button>
     </form>
+
+    <div id="content">
+        <p>Type a keyword (e.g. <em>Hamlet</em>, <em>love</em>, <em>death</em>) and press Search.</p>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('search-form');
+      const contentDiv = document.getElementById('content');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const query = document.getElementById('query').value;
+        const fuzzy = document.getElementById('fuzzy').checked;
+
+        contentDiv.innerHTML = "<p><em>Searching...</em></p>";
+
+        try {
+          const response = await fetch(`/search?${new URLSearchParams({ q: query, fuzzy })}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+          });
+
+          const html = await response.text();
+          contentDiv.innerHTML = html;
+
+          // Zorg dat fuzzy checkbox behouden blijft
+          document.getElementById('fuzzy').checked = fuzzy;
+
+        } catch (err) {
+          contentDiv.innerHTML = "<p style='color:red;'>Error loading results.</p>";
+          console.error(err);
+        }
+      });
+    });
+</script>
 </body>
 </html>
