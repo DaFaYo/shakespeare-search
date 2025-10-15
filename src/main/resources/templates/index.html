@@ -28,9 +28,10 @@
                     <div class="result">
                         <h2>${r.title}</h2>
                         <p><strong>Aantal voorkomens:</strong> ${r.occurrences}</p>
-                        <p>${r.highlightedText}</p>
+                        ${r.highlightedTextSnippets.map(s => `<p>${s}</p>`).join('')}
                     </div>
                 `).join('');
+
 
             } catch (error) {
                 console.error('Search failed:', error);
