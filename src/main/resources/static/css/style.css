@@ -1,163 +1,91 @@
-/* Algemene stijl */
+/* Algemene layout */
 body {
-  font-family: system-ui, sans-serif;
-  background-color: #fafafa;
-  color: #222;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 2em;
-  margin: 0;
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Container */
-.container {
-  max-width: 800px;
-  width: 100%;
-  background: #fff;
-  padding: 2em;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+header, footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
 }
 
-/* Titels */
-h1, h2 {
-  color: #333;
-  font-weight: 600;
-  margin-top: 0;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  word-break: break-word;
-  hyphens: auto;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 1.5em;
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
 }
 
 /* Formulier */
 form {
-  display: flex;
-  justify-content: center;
-  gap: 0.5em;
-  flex-wrap: wrap;
+    background: white;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    width: 100%;
+    max-width: 600px;
 }
 
 input[type="text"] {
-  padding: 0.5em 0.8em;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 60%;
-  min-width: 200px;
+    padding: 0.5em;
+    font-size: 1em;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+label {
+    font-size: 0.9em;
 }
 
 button {
-  padding: 0.5em 1em;
-  background-color: #0078d4;
-  border: none;
-  color: white;
-  font-size: 1em;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+    padding: 0.7em;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    background-color: #0077cc;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
-  background-color: #005fa3;
+    background-color: #005fa3;
 }
 
 /* Resultaten */
 .result {
-  margin-bottom: 2em;
-  padding-bottom: 1.5em;
-  border-bottom: 1px solid #eee;
+    background: white;
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px;
+    word-wrap: break-word;
 }
 
-.result p {
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  line-height: 1.6;
-  max-width: 80ch;
+.result h2 {
+    margin-top: 0;
+    word-wrap: break-word;
 }
 
-/* Highlight van zoektermen */
 mark {
-  background: yellow;
-  padding: 0 2px;
+    background: yellow;
 }
 
-/* Link */
-a {
-  display: inline-block;
-  margin-top: 1em;
-  text-decoration: none;
-  color: #0078d4;
+/* Footer */
+footer {
+    font-size: 0.85em;
 }
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Fuzzy toggle switch */
-.toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  cursor: pointer;
-  user-select: none;
-}
-
-.toggle input[type="checkbox"] {
-  display: none;
-}
-
-.toggle .slider {
-  position: relative;
-  width: 40px;
-  height: 22px;
-  background-color: #ccc;
-  border-radius: 20px;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.toggle .slider::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  background-color: white;
-  border-radius: 50%;
-  transition: transform 0.2s ease-in-out;
-}
-
-.toggle input[type="checkbox"]:checked + .slider {
-  background-color: #0078d4;
-}
-
-.toggle input[type="checkbox"]:checked + .slider::before {
-  transform: translateX(18px);
-}
-
-.label-text {
-  font-size: 0.9em;
-  color: #333;
-}
-
-.search-form {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  margin-bottom: 1em;
-}
-
-.fuzzy-label {
-  color: #0078d4;
-  font-style: italic;
-  margin-bottom: 1em;
-}
-

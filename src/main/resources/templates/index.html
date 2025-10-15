@@ -1,57 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Shakespeare Search</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+        async function doSearch(event) {
+            event.preventDefault();
+
+            const query = document.querySelector('#query').value;
+            const fuzzy = document.querySelector('#fuzzy').checked;
+            const exact = document.querySelector('#exact').checked;
+
+            const resultsContainer = document.querySelector('#results');
+            resultsContainer.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const response = await fetch(`/api/search?q=${encodeURIComponent(query)}&fuzzy=${fuzzy}&exact=${exact}`);
+                const results = await response.json();
+
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = '<p>Geen resultaten gevonden.</p>';
+                    return;
+                }
+
+                resultsContainer.innerHTML = results.map(r => `
+                    <div class="result">
+                        <h2>${r.title}</h2>
+                        <p><strong>Aantal voorkomens:</strong> ${r.occurrences}</p>
+                        <p>${r.highlightedText}</p>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Search failed:', error);
+                resultsContainer.innerHTML = '<p>Er is een fout opgetreden tijdens het zoeken.</p>';
+            }
+        }
+    </script>
 </head>
 <body>
-<div class="container">
+<header>
     <h1>Shakespeare Search</h1>
+</header>
 
-    <form id="search-form" class="search-form">
-        <input type="text" id="query" name="q" placeholder="Enter keyword..." required />
+<main>
+    <form id="searchForm" onsubmit="doSearch(event)">
+        <input type="text" id="query" placeholder="Enter keyword..." />
         <label>
-            <input type="checkbox" id="fuzzy" name="fuzzy"> Fuzzy search
+            <input type="checkbox" id="fuzzy" /> Fuzzy search
+        </label>
+        <label>
+            <input type="checkbox" id="exact" /> Exact phrase
         </label>
         <button type="submit">Search</button>
     </form>
 
-    <div id="content">
-        <p>Type a keyword (e.g. <em>Hamlet</em>, <em>love</em>, <em>death</em>) and press Search.</p>
-    </div>
-</div>
+    <div id="results"></div>
+</main>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('search-form');
-      const contentDiv = document.getElementById('content');
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const query = document.getElementById('query').value;
-        const fuzzy = document.getElementById('fuzzy').checked;
-
-        contentDiv.innerHTML = "<p><em>Searching...</em></p>";
-
-        try {
-          const response = await fetch(`/search?${new URLSearchParams({ q: query, fuzzy })}`, {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-          });
-
-          const html = await response.text();
-          contentDiv.innerHTML = html;
-
-          // Zorg dat fuzzy checkbox behouden blijft
-          document.getElementById('fuzzy').checked = fuzzy;
-
-        } catch (err) {
-          contentDiv.innerHTML = "<p style='color:red;'>Error loading results.</p>";
-          console.error(err);
-        }
-      });
-    });
-</script>
+<footer>
+    <p>Demo app - Shakespeare Search with Elasticsearch</p>
+</footer>
 </body>
 </html>
