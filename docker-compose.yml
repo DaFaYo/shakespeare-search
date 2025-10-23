@@ -30,5 +30,33 @@ services:
       - "5601:5601"
     mem_limit: 1g
 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=shakespeare
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    mem_limit: 512m
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:9.1.5
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+      - mysql
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./logstash/jdbc:/usr/share/logstash/jdbc
+    environment:
+      LS_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ports:
+      - "5044:5044"   # optioneel, voor beats input
+    mem_limit: 1g
+
 volumes:
   esdata:
