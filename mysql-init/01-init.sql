@@ -11,4 +11,5 @@ INSERT INTO plays (title, text) VALUES
 ('Richard III', 'A horse, a horse, my kingdom for a horse!'),
 ('Anthony and Cleopatra', 'O happy horse, to bear the weight of Antony!'),
 ('Julius Caesar', 'Yond Cassius has a lean and hungry look; He thinks too much: such men are dangerous'),
+('Henry IV', 'Uneasy lies the head that wears a crown'),
 ('Henry V', 'Once more unto the breach, dear friends, once more');
