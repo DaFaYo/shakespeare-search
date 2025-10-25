@@ -52,21 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     resultsDiv.innerHTML = data
-      .map((item) => {
-        if (type === "database") {
-          return `
-            <div class="result">
-              <h3>${item.title}</h3>
-              <p>${item.text}</p>
-            </div>`;
-        } else {
-          return `
-            <div class="result">
-              <h3>${item.title || "(geen titel)"}</h3>
-              <p>${item.content || item.text || ""}</p>
-            </div>`;
-        }
-      })
-      .join("");
-  }
+         .map((item) => {
+           if (type === "database") {
+             return `
+               <div class="result">
+                 <h3>${item.title}</h3>
+                 <p th:utext="${item.highlightedText}">${item.highlightedText}</p>
+               </div>`;
+           } else {
+             return `
+               <div class="result">
+                 <h3>${item.title || "(geen titel)"}</h3>
+                 <p>${item.content || item.text || ""}</p>
+               </div>`;
+           }
+         })
+         .join("");
+    }
 });
