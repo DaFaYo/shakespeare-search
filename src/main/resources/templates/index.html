@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shakespeare Search</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script defer src="/js/script.js"></script>
+</head>
+<body>
+<header>
+    <h1>Shakespeare Search</h1>
+</header>
+
+<main>
+    <form id="searchForm">
+        <input type="text" id="query" placeholder="Enter keyword..." />
+        <label>
+            <input type="checkbox" id="fuzzy" /> Fuzzy search
+        </label>
+        <label>
+            <input type="checkbox" id="exact" /> Exact phrase
+        </label>
+
+        <div class="button-row">
+            <button id="searchDocuments">Search Documents</button>
+            <button id="searchDatabase">Search Database</button>
+        </div>
+    </form>
+
+    <div id="results"></div>
+</main>
+
+<footer>
+    <p>Demo app - Shakespeare Search with Elasticsearch</p>
+</footer>
+</body>
+</html>
