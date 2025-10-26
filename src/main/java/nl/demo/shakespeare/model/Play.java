@@ -1,13 +1,13 @@
 package nl.demo.shakespeare.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
+import lombok.Data;
 
-@Entity
-@Table(name = "plays")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "plays", uniqueConstraints = {@UniqueConstraint(columnNames = "title")})
 @Builder
 public class Play {
 
@@ -15,8 +15,12 @@ public class Play {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Title is required")
+    @Column(nullable = false, unique = true)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Lob
+    @Basic(fetch = FetchType.LAZY) // voorkomt dat hele tekst altijd geladen wordt
+    @Column(nullable = false)
     private String text;
 }

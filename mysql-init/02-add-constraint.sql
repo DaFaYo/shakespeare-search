@@ -1,0 +1,5 @@
+ALTER TABLE plays
+ADD CONSTRAINT uc_title UNIQUE (title);
+
+ALTER TABLE plays
+MODIFY title VARCHAR(255) NOT NULL;
