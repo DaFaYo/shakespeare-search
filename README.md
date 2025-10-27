@@ -67,3 +67,60 @@ Main application: http://localhost:8080/
 | Elasticsearch API         | [http://localhost:9200](http://localhost:9200)                                             |
 
 
+## Overview Diagram
+
+```text
+┌────────────────────┐
+│     Frontend       │
+│ (Thymeleaf + JS)   │
+│ http://localhost:8080 │
+└─────────┬──────────┘
+          │ REST API-calls
+          ▼
+┌──────────────────────────────┐
+│     Spring Boot Backend      │
+│  (Shakespeare Search API)    │
+│                              │
+│  • Controllers (REST)        │
+│  • Services (Business logic) │
+│  • Repositories (JPA)        │
+│  • DTOs & MapStruct mappers  │
+│  • Validation (Jakarta)      │
+└──────────┬───────────┬──────┘
+           │           │
+           │           │
+           │           │
+     CRUD via JPA      │ Full-text search
+           │           │
+           ▼           ▼
+┌────────────────┐    ┌─────────────────────┐
+│     MySQL      │    │   Elasticsearch     │
+│  plays-tabel    │    │ index: shakespeare │
+│ id | title | text │  │ index: plays       │
+└─────────┬────────┘    └─────────┬──────────┘
+          │                       ▲
+          │ JDBC Poll             │
+          ▼                       │
+     ┌────────────────────┐       │
+     │     Logstash       │───────┘
+     │ - Pollt MySQL elke minuut │
+     │ - Schrijft naar Elasticsearch │
+     └────────────────────┘
+
+┌────────────────────────────┐
+│         Kibana             │
+│  http://localhost:5601     │
+│  Visualisatie & search UI  │
+└────────────────────────────┘
+
+```
+## Summary of the flow
+
+| Actie                 | Bron                          | Verwerking                        | Doel                                                   |
+| --------------------- | ----------------------------- | --------------------------------- | ------------------------------------------------------ |
+| Nieuwe play toevoegen | Swagger (POST /api/plays)     | Spring Boot → MySQL               | Wordt later door Logstash toegevoegd aan Elasticsearch |
+| Play zoeken           | Webinterface of API           | Elasticsearch query               | Retourneert resultaten met highlight                   |
+| Play wijzigen         | Swagger (PUT /api/plays/{id}) | Spring Boot → MySQL               | Logstash herindexeert                                  |
+| Document zoeken       | /api/documents/search         | Elasticsearch (shakespeare index) | Doorzoekt alle werken van Shakespeare                  |
+| Analyseren            | Kibana UI                     | Elasticsearch data                | Grafieken en tekstanalyse                              |
+
